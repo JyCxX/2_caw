@@ -3,27 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Cadastro de Tarefas</title>
+    <title>Task Manager Pro</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Minhas Tarefas</h1>
-            <p>Centralize sua produtividade.</p>
-        </header>
-
-        <main>
-            <div class="input-group">
-                <input type="text" id="taskInput" placeholder="O que precisa ser feito?">
-                <button id="addTaskBtn">Adicionar</button>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>Task.Os</h2>
             </div>
-
-            <ul id="taskList">
+            <nav>
+                <ul>
+                    <li class="active">Mural Principal</li>
+                    <li>Projetos (Em breve)</li>
+                    <li>Ajustes</li>
                 </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-bar">
+                <h1>Meu Dia</h1>
+                <p>Organize suas demandas com foco.</p>
+                
+                <div class="input-group">
+                    <input type="text" id="taskInput" placeholder="Nova tarefa...">
+                    <select id="taskPriority">
+                        <option value="baixa">Prioridade Baixa</option>
+                        <option value="media" selected>Prioridade Média</option>
+                        <option value="alta">Prioridade Alta</option>
+                    </select>
+                    <button id="addTaskBtn">Adicionar</button>
+                </div>
+            </header>
+
+            <section class="task-board" id="taskList">
+            </section>
         </main>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
