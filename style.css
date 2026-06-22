@@ -1,105 +1,190 @@
 :root {
-    --bg-color: #121212;
-    --container-bg: #1e1e1e;
-    --text-color: #ffffff;
-    --accent-cyan: #00ffff;
-    --accent-blue: #007bff;
+    --bg-dark: #0f172a;
+    --bg-sidebar: #1e293b;
+    --bg-card: #334155;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --accent-cyan: #22d3ee;
+    --accent-blue: #3b82f6;
+    
+    /* Cores das Prioridades */
+    --prioridade-baixa: #10b981; /* Verde */
+    --prioridade-media: #f59e0b; /* Amarelo */
+    --prioridade-alta: #ef4444;  /* Vermelho */
+}
+
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
 }
 
 body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    height: 100vh;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
+    overflow: hidden; /* Mantém a tela fixa, só rola o mural */
 }
 
-.container {
-    background-color: var(--container-bg);
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 255, 255, 0.1);
+.app-container {
+    display: flex;
     width: 100%;
-    max-width: 400px;
+    height: 100%;
 }
 
-header {
-    text-align: center;
-    margin-bottom: 20px;
+/* --- Menu Lateral --- */
+.sidebar {
+    width: 250px;
+    background-color: var(--bg-sidebar);
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #334155;
 }
 
-h1 {
-    color: var(--accent-cyan);
-    margin: 0;
+.logo h2 { 
+    color: var(--accent-cyan); 
+    margin-bottom: 40px; 
+    font-size: 26px; 
+    letter-spacing: 1px;
 }
+
+.sidebar ul { list-style: none; }
+.sidebar li {
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: all 0.3s ease;
+}
+
+.sidebar li:hover, .sidebar li.active {
+    background-color: #334155;
+    color: var(--text-main);
+    border-left: 4px solid var(--accent-cyan);
+}
+
+/* --- Mural Central --- */
+.main-content {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* Rolagem apenas no mural */
+}
+
+.top-bar { margin-bottom: 40px; }
+.top-bar h1 { font-size: 32px; font-weight: 600; }
+.top-bar p { color: var(--text-muted); margin-bottom: 20px; }
 
 .input-group {
     display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 15px;
+    background-color: var(--bg-sidebar);
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-input {
-    flex: 1;
-    padding: 10px;
-    background-color: transparent;
-    border: 1px solid #333;
+input, select {
+    padding: 12px 15px;
+    background-color: var(--bg-dark);
+    border: 1px solid #475569;
     color: white;
-    border-radius: 5px;
+    border-radius: 8px;
     outline: none;
+    font-size: 15px;
 }
-
-input:focus {
-    border-color: var(--accent-cyan);
-}
+input { flex: 1; }
+input:focus, select:focus { border-color: var(--accent-cyan); }
 
 button {
-    padding: 10px 15px;
+    padding: 12px 25px;
     background-color: var(--accent-blue);
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
-    transition: background 0.3s;
+    transition: 0.3s;
+}
+button:hover { 
+    background-color: var(--accent-cyan); 
+    color: var(--bg-dark); 
 }
 
-button:hover {
-    background-color: var(--accent-cyan);
-    color: black;
+/* --- Cards das Tarefas --- */
+.task-board {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
 }
 
-ul {
-    list-style: none;
-    padding: 0;
+.task-card {
+    background-color: var(--bg-sidebar);
+    padding: 20px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 130px;
+    border-top: 5px solid #475569;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+.task-card:hover { transform: translateY(-5px); }
+
+/* Linha colorida no topo do card baseada na prioridade */
+.task-card.prioridade-baixa { border-top-color: var(--prioridade-baixa); }
+.task-card.prioridade-media { border-top-color: var(--prioridade-media); }
+.task-card.prioridade-alta { border-top-color: var(--prioridade-alta); }
+
+.task-card.completed {
+    opacity: 0.5;
+    background-color: #1e293b80;
+}
+.task-card.completed .task-title {
+    text-decoration: line-through;
+    color: var(--text-muted);
 }
 
-li {
-    background-color: #2a2a2a;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 5px;
+.task-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    border-left: 4px solid var(--accent-blue);
+    align-items: flex-start;
+    margin-bottom: 20px;
 }
 
-li.completed {
-    opacity: 0.6;
-    text-decoration: line-through;
-    border-left-color: #4CAF50;
+.task-title {
+    font-size: 16px;
+    line-height: 1.4;
 }
 
-.delete-btn {
-    background-color: #ff4d4d;
-    padding: 5px 10px;
+.badge {
+    font-size: 0.7em;
+    padding: 4px 8px;
+    border-radius: 12px;
+    background-color: var(--bg-dark);
+    text-transform: uppercase;
+    font-weight: bold;
 }
 
-.delete-btn:hover {
-    background-color: #ff1a1a;
-    color: white;
+.task-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
 }
+
+.btn-icon {
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    border: none;
+}
+.btn-check { background-color: var(--prioridade-baixa); color: white; }
+.btn-check:hover { background-color: #059669; }
+.btn-delete { background-color: var(--prioridade-alta); color: white; }
+.btn-delete:hover { background-color: #dc2626; }
